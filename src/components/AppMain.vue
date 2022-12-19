@@ -25,16 +25,21 @@ export default {
 </script>
 
 <template>
-    <ul v-if="store.search.query">
-        <li v-for="res in store.search.results">
-            Title: {{ res.title }}
-            <br>Original Title: {{ res.original_title }}
-            <br>
-            <img v-if="getFlagByLocale(res.original_language)" :src="getFlagByLocale(res.original_language)" alt="">
-            <span v-else>
-                Original Lang: {{ res.original_language }}
-            </span>
-            <br>Vote: {{ res.vote_average }}
-        </li>
-    </ul>
+    <div v-if="store.search.query">
+        <span>{{ store.search.nOfResults }}</span>
+        <ul>
+            <li v-for="res in store.search.results">
+                Title: {{ res.title }}
+                {{ res.type }}
+                <br>Original Title: {{ res.original_title }}
+                <br>
+                <img v-if="getFlagByLocale(res.original_language)" :src="getFlagByLocale(res.original_language)" alt="">
+                <span v-else>
+                    Original Lang: {{ res.original_language }}
+                </span>
+                <br>Vote: {{ res.vote_average }}
+            </li>
+        </ul>
+
+    </div>
 </template>

@@ -17,12 +17,18 @@ export default {
      */
     search(query) {
 
+      // clear search
+      store.search.query = undefined;
+      store.search.nOfResults = 0;
+      store.search.results = [];
+
       // base URL
       const baseURL = "https://api.themoviedb.org/3/search/";
 
       // media types (movie/tv show...)
       const mediaTypes = [
         "movie",
+        "tv",
       ]
 
       // ajax loop in mediaTypes
@@ -31,11 +37,11 @@ export default {
         axios
           // ajax request
           .get(
-            baseURL 
+            baseURL
             + mediaType
             + "?" + "api_key=" + store.API_KEY
             + "&" + "query=" + query
-        )
+          )
 
           // ajax response
           .then((response) => {
@@ -46,15 +52,21 @@ export default {
             store.search.query = query;
 
             // Store results number
-            store.search.nOfResults = response.data.results.length;
+            store.search.nOfResults += response.data.results.length;
 
             // Simplify results and store
-            store.search.results = response.data.results.map((res) => {
-              return res;
-            });
+            store.search.results = store.search.results.concat(response.data.results.map((res) => {
+              return {
+                type: res.title ? "MOVIE" : "TV",
+                title: (res.title || res.name),
+                original_title: (res.original_title || res.original_name),
+                original_language: res.original_language,
+                vote_average: res.vote_average,
+              };
+            }));
           }
 
-        )
+          )
 
           // ajax response error
           .catch((err) => {
@@ -62,7 +74,7 @@ export default {
             console.log("AXIOS: ");
             console.log(err);
           }
-        );
+          );
       }
     },
   },
@@ -70,7 +82,7 @@ export default {
 </script>
 
 <template>
-  <AppHeader @search="search"/>
+  <AppHeader @search="search" />
   <AppMain />
 </template>
 
