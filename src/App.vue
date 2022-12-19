@@ -61,7 +61,7 @@ export default {
                 title: (res.title || res.name),
                 original_title: (res.original_title || res.original_name),
                 original_language: res.original_language,
-                vote_average: res.vote_average,
+                vote_average: Math.ceil(res.vote_average * 0.5),
                 poster: res.poster_path,
               };
             }));
