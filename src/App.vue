@@ -3,8 +3,16 @@ import AppHeader from './components/AppHeader.vue'
 import AppMain from './components/AppMain.vue'
 import axios from 'axios';
 import { store } from './store';
+import { localeAlpha2 } from './flags.js'
 
 export default {
+
+  data() {
+    return {
+      store,
+      localeAlpha2,
+    }
+  },
 
   components: {
     AppHeader,
@@ -61,6 +69,7 @@ export default {
                 title: (res.title || res.name),
                 original_title: (res.original_title || res.original_name),
                 original_language: res.original_language,
+                original_flag: (this.localeAlpha2[res.original_language] ? this.localeAlpha2[res.original_language] : false),
                 vote_average: Math.ceil(res.vote_average * 0.5),
                 poster: res.poster_path,
               };
