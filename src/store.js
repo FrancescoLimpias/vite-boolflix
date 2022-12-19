@@ -7,7 +7,7 @@ import { reactive } from "vue";
 export const store = reactive({
 
     // MVDB api
-    API_KEY: undefined,
+    API_KEY: "d66e4d04778496fe9c54c434659827fc",
 
     /* Search Instance
      - object "filled" by search method in App.vue
