@@ -13,7 +13,10 @@ export default {
 <template>
     <ul v-if="store.search.query">
         <li v-for="res in store.search.results">
-            {{ title }}
+            Title: {{ res.title }}
+            <br>Original Title: {{ res.original_title }}
+            <br>Original Lang: {{ res.original_language }}
+            <br>Vote: {{ res.vote_average }}
         </li>
     </ul>
 </template>

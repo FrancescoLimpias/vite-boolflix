@@ -43,14 +43,27 @@ export default {
         )
 
           // ajax response
-          .then((res) => {
-            console.log(res.data);
+          .then((response) => {
+            // DEBUG, then remove
+            console.log(response.data);
+
+            // Store query
+            store.search.query = query;
+
+            // Store results number
+            store.search.nOfResults = response.data.results.length;
+
+            // Simplify results and store
+            store.search.results = response.data.results.map((res) => {
+              return res;
+            });
           }
 
         )
 
           // ajax response error
           .catch((err) => {
+            // DEBUG error handling
             console.log("AXIOS: ");
             console.log(err);
           }
