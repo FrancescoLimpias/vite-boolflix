@@ -31,12 +31,17 @@ export default {
             <li v-for="res in store.search.results">
                 Title: {{ res.title }}
                 {{ res.type }}
+
+                <img v-if="res.poster" :src="'https://image.tmdb.org/t/p/w342/' + res.poster" alt="">
+
                 <br>Original Title: {{ res.original_title }}
                 <br>
+
                 <img v-if="getFlagByLocale(res.original_language)" :src="getFlagByLocale(res.original_language)" alt="">
                 <span v-else>
                     Original Lang: {{ res.original_language }}
                 </span>
+                
                 <br>Vote: {{ res.vote_average }}
             </li>
         </ul>

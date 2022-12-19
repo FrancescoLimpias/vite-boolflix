@@ -62,6 +62,7 @@ export default {
                 original_title: (res.original_title || res.original_name),
                 original_language: res.original_language,
                 vote_average: res.vote_average,
+                poster: res.poster_path,
               };
             }));
           }
