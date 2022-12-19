@@ -17,11 +17,6 @@ export default {
      */
     search(query) {
 
-      // data validation
-      if(query == undefined || query.trim().length == 0){
-        return;
-      }
-
       // base URL
       const baseURL = "https://api.themoviedb.org/3/search/";
 

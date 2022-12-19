@@ -22,6 +22,7 @@ export const store = reactive({
         // nOfResults - number of matches
         nOfResults: 0,
 
+        // results - matching results (movies/tv shows...)
         results: [
 
             // hic sunt movies 😜
