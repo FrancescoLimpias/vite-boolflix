@@ -1,17 +1,68 @@
 <script>
 import AppHeader from './components/AppHeader.vue'
 import AppMain from './components/AppMain.vue'
+import axios from 'axios';
+import { store } from './store';
 
 export default {
+
   components: {
     AppHeader,
     AppMain,
-  }
+  },
+
+  methods: {
+    /* SEARCH
+     generic method for movies and TV shows query
+     */
+    search(query) {
+
+      // data validation
+      if(query == undefined || query.trim().length == 0){
+        return;
+      }
+
+      // base URL
+      const baseURL = "https://api.themoviedb.org/3/search/";
+
+      // media types (movie/tv show...)
+      const mediaTypes = [
+        "movie",
+      ]
+
+      // ajax loop in mediaTypes
+      for (const mediaType of mediaTypes) {
+
+        axios
+          // ajax request
+          .get(
+            baseURL 
+            + mediaType
+            + "?" + "api_key=" + store.API_KEY
+            + "&" + "query=" + query
+        )
+
+          // ajax response
+          .then((res) => {
+            console.log(res.data);
+          }
+
+        )
+
+          // ajax response error
+          .catch((err) => {
+            console.log("AXIOS: ");
+            console.log(err);
+          }
+        );
+      }
+    },
+  },
 }
 </script>
 
 <template>
-  <AppHeader />
+  <AppHeader @search="search"/>
   <AppMain />
 </template>
 
