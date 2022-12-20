@@ -39,19 +39,25 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-.AppMain{
-    .results-number{
+.AppMain {
+
+    margin-top: 70px;
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+
+    .results-number {
         display: inline-block;
-        margin: .4rem .8rem;
+        margin: 1rem 15rem;
     }
 
-    .grid{
+    .grid {
         // Styling
         list-style-type: none;
+        padding: .5rem;
 
         // Inner partitioning
         display: flex;
-        justify-content: space-evenly;
+        justify-content: center;
         flex-wrap: wrap;
         gap: 2rem;
     }

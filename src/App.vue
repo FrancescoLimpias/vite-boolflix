@@ -22,15 +22,23 @@ export default {
   },
 
   methods: {
-    /* SEARCH
-     generic method for movies and TV shows query
+    /* SEARCHes
+     generic methods for movies and TV shows query
      */
-    search(query) {
-
+    clearSearch() {
       // clear search
       store.search.query = undefined;
       store.search.nOfResults = 0;
       store.search.results = [];
+    },
+
+    queryHome() {
+      //Just for debug :p
+      this.querySearch("Home");
+    },
+
+    querySearch(query) {
+      this.clearSearch();
 
       // base URL
       const baseURL = "https://api.themoviedb.org/3/search/";
@@ -41,7 +49,7 @@ export default {
         "tv",
       ]
 
-      // ajax loop in mediaTypes
+      // ajax loop of mediaTypes
       for (const mediaType of mediaTypes) {
 
         axios
@@ -114,22 +122,10 @@ export default {
 </script>
 
 <template>
-  <AppHeader @search="search" />
+  <AppHeader @search="querySearch" @home="queryHome" />
   <AppMain />
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
 
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
 </style>
