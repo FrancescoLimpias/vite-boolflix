@@ -1,4 +1,5 @@
 <script>
+import ResultCardVue from './ResultCard.vue';
 import { store } from '../store.js'
 
 export default {
@@ -7,33 +8,52 @@ export default {
             store,
         }
     },
+
+    components: {
+        ResultCardVue,
+    }
 }
 </script>
 
 <template>
-    <div v-if="store.search.query">
-        <span>{{ store.search.nOfResults }}</span>
-        <ul>
-            <li v-for="res in store.search.results">
-                Title: {{ res.title }}
-                {{ res.type }}
+    <div class="AppMain">
 
-                <div v-if="res.poster">
-                    <br>
-                    <img :src="'https://image.tmdb.org/t/p/w342/' + res.poster" alt="">
-                </div>
+        <!-- Query Result -->
+        <div v-if="store.search.query">
 
-                <br>Original Title: {{ res.original_title }}
-                <br>
+            <!-- results counter -->
+            <span class="results-number">
+                {{ store.search.nOfResults }} results for query "{{ store.search.query }}"
+            </span>
 
-                <img v-if="res.original_flag" :src="'https://flagcdn.com/w20/' + res.original_flag + '.png'" alt="">
-                <span v-else>
-                    Original Lang: {{ res.original_language }}
-                </span>
+            <!-- grid -->
+            <ul class="grid">
+                <li v-for="result in store.search.results">
+                    <ResultCardVue :data="result" />
+                </li>
+            </ul>
 
-                <br>Vote: {{ res.vote_average }}
-            </li>
-        </ul>
+        </div>
 
     </div>
 </template>
+
+<style lang="scss" scoped>
+.AppMain{
+    .results-number{
+        display: inline-block;
+        margin: .4rem .8rem;
+    }
+
+    .grid{
+        // Styling
+        list-style-type: none;
+
+        // Inner partitioning
+        display: flex;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+}
+</style>

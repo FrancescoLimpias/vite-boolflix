@@ -60,18 +60,22 @@ export default {
             store.search.query = query;
 
             // Store results number
-            store.search.nOfResults += response.data.results.length;
+            store.search.nOfResults += response.data.total_results;
 
             // Simplify results and store
             store.search.results = store.search.results.concat(response.data.results.map((res) => {
               return {
                 type: res.title ? "MOVIE" : "TV",
+
                 title: (res.title || res.name),
+                poster: res.poster_path,
+
                 original_title: (res.original_title || res.original_name),
                 original_language: res.original_language,
                 original_flag: (this.localeAlpha2[res.original_language] ? this.localeAlpha2[res.original_language] : false),
+
                 vote_average: Math.ceil(res.vote_average * 0.5),
-                poster: res.poster_path,
+                overview: res.overview,
               };
             }));
           }
