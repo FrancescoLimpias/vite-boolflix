@@ -65,7 +65,7 @@ export default {
             // Simplify results and store
             store.search.results = store.search.results.concat(response.data.results.map((res) => {
               return {
-                type: res.title ? "MOVIE" : "TV",
+                type: res.title ? "MOVIE" : "TV Show",
 
                 title: (res.title || res.name),
                 poster: res.poster_path,

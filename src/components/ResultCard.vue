@@ -10,7 +10,12 @@ export default {
         <!-- Poster -->
         <img v-if="data.poster" :src="'https://image.tmdb.org/t/p/w342/' + data.poster" :alt="data.title">
         <div v-else class="placeholder">
-            {{ data.title }}
+            <h4>
+                [{{ data.type }}] {{ data.title }}
+            </h4>
+            <div class="tape-holder">
+                <i class="fa-solid fa-tape"></i>
+            </div>
         </div>
 
         <!-- Info -->
@@ -68,14 +73,44 @@ export default {
     width: 342px;
     height: 513px;
 
+    display: flex;
+    place-items: center;
+
     .placeholder {
+
+        position: relative;
+
+        // Styling
         width: 100%;
         height: 100%;
         background-color: rgba(255, 255, 255, 0.1);
-        padding: 1rem;
+        padding: 2rem;
+
+        // Inner partitioning
+        display: flex;
+        flex-direction: column-reverse;
+
+        h4 {
+            color: rgb(240, 83, 83);
+        }
+
+        .tape-holder {
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            i {
+                opacity: .3;
+                display: inline-block;
+                font-size: 8rem;
+            }
+        }
     }
 
-    &:hover .info{
+    &:hover .info {
         opacity: 1;
     }
 
