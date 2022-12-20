@@ -1,12 +1,16 @@
 <script>
 import ResultCardVue from './ResultCard.vue';
 import { store } from '../store.js'
+import axios from 'axios';
 
 export default {
     data() {
         return {
             store,
         }
+    },
+
+    methods: {
     },
 
     components: {
@@ -29,7 +33,7 @@ export default {
             <!-- grid -->
             <ul class="grid">
                 <li v-for="result in store.search.results">
-                    <ResultCardVue :data="result" />
+                    <ResultCardVue :data="result"/>
                 </li>
             </ul>
 

@@ -54,6 +54,14 @@ export default {
                         &#9734;
                     </span>
                 </li>
+                <li v-if="data.actors">
+                    <span class="key">
+                        Actors:
+                    </span>
+                    <span v-for="(actor, index) in data.actors">
+                        {{ actor + (index < 4 ? ", " : "")}}
+                    </span>
+                </li>
                 <li>
                     <span class="key">
                         Overview:

@@ -64,7 +64,7 @@ export default {
           // ajax response
           .then((response) => {
             // DEBUG, then remove
-            // console.log(response.data);
+            console.log(response.data);
 
             // Store query
             store.search.query = query;
@@ -77,7 +77,7 @@ export default {
               // movie object constructor
 
               // TYPE (movie/tv show)
-              const type = res.title ? "MOVIE" : "TV Show";
+              const type = res.title ? "movie" : "tv";
 
               // DISPLAY
               const title = (res.title || res.name);
@@ -92,8 +92,11 @@ export default {
               const vote_average = Math.ceil(res.vote_average * 0.5);
               const overview = res.overview;
 
-              // axios.get().then().catch();
-              return {
+              // DETAILS
+              this.queryActors(query, type, res.id);
+
+              let movieObj = {
+                id: res.id,
                 type,
                 title,
                 poster,
@@ -103,6 +106,8 @@ export default {
                 vote_average,
                 overview,
               };
+
+              return movieObj;
             }));
           }
 
@@ -116,6 +121,33 @@ export default {
           }
           );
       }
+    },
+
+    queryActors(originQuery, type, id) {
+      axios
+        .get(
+          "https://api.themoviedb.org/3/"
+          + type
+          + "/" + id
+          + "/credits?"
+          + "api_key=" + store.API_KEY)
+        .then((res) => {
+          
+          // Another query has been issued
+          if (store.search.query != originQuery) {
+            return;
+          }
+          
+          let cast = res.data.cast;
+          cast.splice(5);
+          console.log(cast);
+          store.search.results.find(e => e.id == id && e.type == type).actors = cast.map((e) => { return e.name });
+
+        })
+        .catch((err) => {
+          console.log(err);
+        }
+        );
     },
   },
 }
