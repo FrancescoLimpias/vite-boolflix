@@ -4,6 +4,7 @@ import AppMain from './components/AppMain.vue'
 import axios from 'axios';
 import { store } from './store';
 import { localeAlpha2 } from './flags.js'
+import ISO6391 from 'iso-639-1';
 
 export default {
 
@@ -11,6 +12,7 @@ export default {
     return {
       store,
       localeAlpha2,
+      ISO6391,
     }
   },
 
@@ -54,7 +56,7 @@ export default {
           // ajax response
           .then((response) => {
             // DEBUG, then remove
-            console.log(response.data);
+            // console.log(response.data);
 
             // Store query
             store.search.query = query;
@@ -64,18 +66,34 @@ export default {
 
             // Simplify results and store
             store.search.results = store.search.results.concat(response.data.results.map((res) => {
+              // movie object constructor
+
+              // TYPE (movie/tv show)
+              const type = res.title ? "MOVIE" : "TV Show";
+
+              // DISPLAY
+              const title = (res.title || res.name);
+              const poster = res.poster_path;
+
+              // ORIGINALS
+              const original_title = (res.original_title || res.original_name);
+              const original_language = this.ISO6391.getName(res.original_language);
+              const original_flag = (this.localeAlpha2[res.original_language] ? this.localeAlpha2[res.original_language] : false);
+
+              // SCORE
+              const vote_average = Math.ceil(res.vote_average * 0.5);
+              const overview = res.overview;
+
+              // axios.get().then().catch();
               return {
-                type: res.title ? "MOVIE" : "TV Show",
-
-                title: (res.title || res.name),
-                poster: res.poster_path,
-
-                original_title: (res.original_title || res.original_name),
-                original_language: res.original_language,
-                original_flag: (this.localeAlpha2[res.original_language] ? this.localeAlpha2[res.original_language] : false),
-
-                vote_average: Math.ceil(res.vote_average * 0.5),
-                overview: res.overview,
+                type,
+                title,
+                poster,
+                original_title,
+                original_language,
+                original_flag,
+                vote_average,
+                overview,
               };
             }));
           }

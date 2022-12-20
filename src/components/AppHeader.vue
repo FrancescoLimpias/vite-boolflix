@@ -37,14 +37,14 @@ export default {
         <!-- Navbar left -->
         <div class="nav-left">
             <h1>
-                Boolzapp
+                Boolflix
             </h1>
         </div>
 
         <!-- Navbar right -->
         <div class="nav-right">
-            <input type="text" name="query" placeholder="search here" v-model="this.query" @keypress.enter="fireSearch">
-            <button type="submit" @click="fireSearch">🔎</button>
+            <input type="text" name="query" placeholder="🔎 search here" v-model="this.query" @keypress.enter="fireSearch">
+            <button type="submit" @click="fireSearch">search</button>
         </div>
 
     </div>

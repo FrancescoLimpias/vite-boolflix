@@ -39,8 +39,8 @@ export default {
                     </span>
                     <img v-if="data.original_flag" :src="'https://flagcdn.com/w20/' + data.original_flag + '.png'"
                         alt="">
-                    <span v-else>
-                        {{ data.original_language }}
+                    <span>
+                        {{ " " + data.original_language }}
                     </span>
                 </li>
                 <li>
