@@ -33,10 +33,7 @@ export default {
     },
 
     getResult(movieID) {
-      if (store.search.query) {
-        return store.search.results.find(movie => movie.id == movieID);
-      }
-      return false;
+      return store.search.results.find(movie => movie.id == movieID);
     },
 
     queryHome() {
@@ -168,12 +165,17 @@ export default {
 
       // find genres
       const fullGenres = [];
-      for(const [key, value] of Object.entries(genresIDs)){
-        fullGenres.push(store.genres.ids.find(e => e.id == value).name);
+      for (const genreID of genresIDs) {
+        const genre = store.genres.ids.find(e => e.id == genreID);
+        if (genre) {
+          fullGenres.push(genre.name);
+        }
       }
 
       // store results
-      this.getResult(id).genres = fullGenres;
+      setTimeout(() => {
+        this.getResult(id).genres = fullGenres;
+      }, 500);
     }
   },
 
@@ -186,10 +188,6 @@ export default {
       .then((res) => {
         // store map
         store.genres.ids = res.data.genres;
-        // 
-        for(const query of store.genres.queue){
-          this.queryGenres(query.query, query.genresIDs, query.id)
-        }
       })
       .catch();
   },

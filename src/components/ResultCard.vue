@@ -11,7 +11,9 @@ export default {
         <img v-if="data.poster" :src="'https://image.tmdb.org/t/p/w342/' + data.poster" :alt="data.title">
         <div v-else class="placeholder">
             <h4>
-                [{{ data.type }}] {{ data.title }}
+                {{ data.title }}
+                <br/>
+                [{{ data.type }}] 
             </h4>
             <div class="tape-holder">
                 <i class="fa-solid fa-tape"></i>
@@ -107,7 +109,7 @@ export default {
         flex-direction: column-reverse;
 
         h4 {
-            color: rgb(240, 83, 83);
+            color: snow;
         }
 
         .tape-holder {
