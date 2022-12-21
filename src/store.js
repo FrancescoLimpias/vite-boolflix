@@ -9,6 +9,17 @@ export const store = reactive({
     // MVDB api
     API_KEY: "d66e4d04778496fe9c54c434659827fc",
 
+    // MVDB genre sysyem
+    genres: {
+
+        // ids
+        ids: undefined,
+
+        // queue
+        queue: [],
+        
+    },
+
     /* Search Instance
      - object "filled" by search method in App.vue
      - if search.query is defined, search holds current search results

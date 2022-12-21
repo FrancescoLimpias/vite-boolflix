@@ -32,6 +32,13 @@ export default {
       store.search.results = [];
     },
 
+    getResult(movieID) {
+      if (store.search.query) {
+        return store.search.results.find(movie => movie.id == movieID);
+      }
+      return false;
+    },
+
     queryHome() {
       //Just for debug :p
       this.querySearch("Home");
@@ -94,6 +101,7 @@ export default {
 
               // DETAILS
               this.queryActors(query, type, res.id);
+              this.queryGenres(query, res.genre_ids, res.id);
 
               let movieObj = {
                 id: res.id,
@@ -132,15 +140,14 @@ export default {
           + "/credits?"
           + "api_key=" + store.API_KEY)
         .then((res) => {
-          
+
           // Another query has been issued
           if (store.search.query != originQuery) {
             return;
           }
-          
+
           let cast = res.data.cast;
           cast.splice(5);
-          console.log(cast);
           store.search.results.find(e => e.id == id && e.type == type).actors = cast.map((e) => { return e.name });
 
         })
@@ -149,6 +156,42 @@ export default {
         }
         );
     },
+
+    queryGenres(query, genresIDs, id) {
+
+      // check for ids availability
+      if (!store.genres.ids) {
+        // ids not availables, put in queue for later
+        store.genres.queue.push({ query, genresIDs, id });
+        return;
+      }
+
+      // find genres
+      const fullGenres = [];
+      for(const [key, value] of Object.entries(genresIDs)){
+        fullGenres.push(store.genres.ids.find(e => e.id == value).name);
+      }
+
+      // store results
+      this.getResult(id).genres = fullGenres;
+    }
+  },
+
+  mounted() {
+    // Retrieve updated genre list
+    axios
+      .get(
+        "https://api.themoviedb.org/3/genre/movie/list?"
+        + "api_key=" + store.API_KEY)
+      .then((res) => {
+        // store map
+        store.genres.ids = res.data.genres;
+        // 
+        for(const query of store.genres.queue){
+          this.queryGenres(query.query, query.genresIDs, query.id)
+        }
+      })
+      .catch();
   },
 }
 </script>

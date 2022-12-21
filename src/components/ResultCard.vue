@@ -62,6 +62,14 @@ export default {
                         {{ actor + (index < 4 ? ", " : "")}}
                     </span>
                 </li>
+                <li v-if="data.genres">
+                    <span class="key">
+                        Genres:
+                    </span>
+                    <span v-for="(genre, index) in data.genres">
+                        {{ genre + (index < data.genres.length - 1 ? ", " : "")}}
+                    </span>
+                </li>
                 <li>
                     <span class="key">
                         Overview:
